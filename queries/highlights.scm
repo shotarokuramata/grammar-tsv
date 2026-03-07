@@ -1,0 +1,9 @@
+(number) @number
+(float) @number.float
+(boolean) @boolean
+(null_literal) @constant.builtin
+(date) @string.special
+(datetime) @string.special
+(quoted_string) @string
+(text) @string
+"\t" @punctuation.delimiter

@@ -1,0 +1,12 @@
+{
+  "name": "grammar-tsv",
+  "module": "index.ts",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tree-sitter-cli": "^0.26.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
