@@ -1,0 +1,269 @@
+================================
+Blank document
+================================
+
+--------------------------------
+
+(document)
+
+================================
+Single field
+================================
+a
+--------------------------------
+
+(document
+  (row
+    (field
+      (text))))
+
+================================
+Basic TSV
+================================
+foo	bar	baz
+123	0.5	true
+--------------------------------
+
+(document
+  (row
+    (field
+      (text))
+    (field
+      (text))
+    (field
+      (text)))
+  (newline)
+  (row
+    (field
+      (number))
+    (field
+      (float))
+    (field
+      (boolean))))
+
+================================
+Multiple rows
+================================
+foo	bar
+baz	qux
+--------------------------------
+
+(document
+  (row
+    (field
+      (text))
+    (field
+      (text)))
+  (newline)
+  (row
+    (field
+      (text))
+    (field
+      (text))))
+
+================================
+Empty fields
+================================
+	foo
+a		b
+--------------------------------
+
+(document
+  (row
+    (field
+      (text)))
+  (newline)
+  (row
+    (field
+      (text))
+    (field
+      (text))))
+
+================================
+Trailing newline
+================================
+foo	bar
+baz	qux
+--------------------------------
+
+(document
+  (row
+    (field
+      (text))
+    (field
+      (text)))
+  (newline)
+  (row
+    (field
+      (text))
+    (field
+      (text))))
+
+================================
+Numbers
+================================
+42	-7	0xFF
+--------------------------------
+
+(document
+  (row
+    (field
+      (number))
+    (field
+      (number))
+    (field
+      (number))))
+
+================================
+Floats
+================================
+3.14	-0.5	.123	42.
+--------------------------------
+
+(document
+  (row
+    (field
+      (float))
+    (field
+      (float))
+    (field
+      (float))
+    (field
+      (float))))
+
+================================
+Booleans
+================================
+true	false	TRUE	FALSE
+--------------------------------
+
+(document
+  (row
+    (field
+      (boolean))
+    (field
+      (boolean))
+    (field
+      (boolean))
+    (field
+      (boolean))))
+
+================================
+Null literals
+================================
+null	NULL	\N
+--------------------------------
+
+(document
+  (row
+    (field
+      (null_literal))
+    (field
+      (null_literal))
+    (field
+      (null_literal))))
+
+================================
+Date
+================================
+2024-01-01	2023-12-31
+--------------------------------
+
+(document
+  (row
+    (field
+      (date))
+    (field
+      (date))))
+
+================================
+Datetime with T separator
+================================
+2024-01-01T12:30	2024-01-01T12:30:45	2024-01-01T12:30:45.123
+--------------------------------
+
+(document
+  (row
+    (field
+      (datetime))
+    (field
+      (datetime))
+    (field
+      (datetime))))
+
+================================
+Datetime with space separator
+================================
+2024-01-01 12:30:45
+--------------------------------
+
+(document
+  (row
+    (field
+      (datetime))))
+
+================================
+Datetime with timezone
+================================
+2024-01-01T12:30:45Z	2024-01-01T12:30:45+09:00	2024-01-01T12:30:45-0500
+--------------------------------
+
+(document
+  (row
+    (field
+      (datetime))
+    (field
+      (datetime))
+    (field
+      (datetime))))
+
+================================
+Quoted strings
+================================
+"hello"	"with ""quotes"""	""
+--------------------------------
+
+(document
+  (row
+    (field
+      (quoted_string))
+    (field
+      (quoted_string))
+    (field
+      (quoted_string))))
+
+================================
+Mixed types in one row
+================================
+null	true	2024-01-01	2024-01-01T00:00:00Z	3.14	42	"hello"	plain text
+--------------------------------
+
+(document
+  (row
+    (field
+      (null_literal))
+    (field
+      (boolean))
+    (field
+      (date))
+    (field
+      (datetime))
+    (field
+      (float))
+    (field
+      (number))
+    (field
+      (quoted_string))
+    (field
+      (text))))
+
+================================
+Row starting with tabs
+================================
+		foo
+--------------------------------
+
+(document
+  (row
+    (field
+      (text))))

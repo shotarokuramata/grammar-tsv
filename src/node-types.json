@@ -9,6 +9,10 @@
       "required": false,
       "types": [
         {
+          "type": "newline",
+          "named": true
+        },
+        {
           "type": "row",
           "named": true
         }
@@ -91,6 +95,10 @@
   },
   {
     "type": "float",
+    "named": true
+  },
+  {
+    "type": "newline",
     "named": true
   },
   {

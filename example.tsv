@@ -1,0 +1,5 @@
+id	name	age	score	active	birthday	created_at	note
+1	Alice	30	95.5	true	1994-03-08	2024-01-01T12:00:00Z	"hello world"
+2	Bob	null	87.3	false	1990-12-25	2024-01-02 09:30:45	regular text
+3	\N	25	NULL	TRUE	2000-06-15	2024-01-03T18:45:00+09:00	"she said ""hi"""
+4	Charlie	-7	.99	FALSE	null	\N

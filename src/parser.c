@@ -20,7 +20,7 @@
 #define SUPERTYPE_COUNT 0
 
 enum ts_symbol_identifiers {
-  aux_sym_document_token1 = 1,
+  sym_newline = 1,
   anon_sym_TAB = 2,
   sym_null_literal = 3,
   sym_boolean = 4,
@@ -39,7 +39,7 @@ enum ts_symbol_identifiers {
 
 static const char * const ts_symbol_names[] = {
   [ts_builtin_sym_end] = "end",
-  [aux_sym_document_token1] = "document_token1",
+  [sym_newline] = "newline",
   [anon_sym_TAB] = "\t",
   [sym_null_literal] = "null_literal",
   [sym_boolean] = "boolean",
@@ -58,7 +58,7 @@ static const char * const ts_symbol_names[] = {
 
 static const TSSymbol ts_symbol_map[] = {
   [ts_builtin_sym_end] = ts_builtin_sym_end,
-  [aux_sym_document_token1] = aux_sym_document_token1,
+  [sym_newline] = sym_newline,
   [anon_sym_TAB] = anon_sym_TAB,
   [sym_null_literal] = sym_null_literal,
   [sym_boolean] = sym_boolean,
@@ -80,9 +80,9 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = false,
     .named = true,
   },
-  [aux_sym_document_token1] = {
-    .visible = false,
-    .named = false,
+  [sym_newline] = {
+    .visible = true,
+    .named = true,
   },
   [anon_sym_TAB] = {
     .visible = true,
@@ -174,11 +174,11 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
   eof = lexer->eof(lexer);
   switch (state) {
     case 0:
-      if (eof) ADVANCE(2);
+      if (eof) ADVANCE(3);
       ADVANCE_MAP(
         '\t', 5,
-        '\n', 3,
-        '\r', 4,
+        '\n', 4,
+        '\r', 1,
         '"', 24,
         '-', 26,
         '.', 48,
@@ -195,18 +195,17 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       if (lookahead != 0) ADVANCE(65);
       END_STATE();
     case 1:
-      if (lookahead == '"') ADVANCE(23);
-      if (lookahead != 0) ADVANCE(1);
+      if (lookahead == '\n') ADVANCE(4);
       END_STATE();
     case 2:
-      ACCEPT_TOKEN(ts_builtin_sym_end);
+      if (lookahead == '"') ADVANCE(23);
+      if (lookahead != 0) ADVANCE(2);
       END_STATE();
     case 3:
-      ACCEPT_TOKEN(aux_sym_document_token1);
+      ACCEPT_TOKEN(ts_builtin_sym_end);
       END_STATE();
     case 4:
-      ACCEPT_TOKEN(aux_sym_document_token1);
-      if (lookahead == '\n') ADVANCE(3);
+      ACCEPT_TOKEN(sym_newline);
       END_STATE();
     case 5:
       ACCEPT_TOKEN(anon_sym_TAB);
@@ -306,14 +305,14 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 23:
       ACCEPT_TOKEN(sym_quoted_string);
-      if (lookahead == '"') ADVANCE(1);
+      if (lookahead == '"') ADVANCE(2);
       END_STATE();
     case 24:
       ACCEPT_TOKEN(sym_text);
       if (lookahead == '"') ADVANCE(22);
       if (lookahead == '\t' ||
           lookahead == '\n' ||
-          lookahead == '\r') ADVANCE(1);
+          lookahead == '\r') ADVANCE(2);
       if (lookahead != 0) ADVANCE(24);
       END_STATE();
     case 25:
@@ -675,7 +674,7 @@ static const TSLexerMode ts_lex_modes[STATE_COUNT] = {
 static const uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
   [STATE(0)] = {
     [ts_builtin_sym_end] = ACTIONS(1),
-    [aux_sym_document_token1] = ACTIONS(1),
+    [sym_newline] = ACTIONS(1),
     [anon_sym_TAB] = ACTIONS(1),
     [sym_null_literal] = ACTIONS(1),
     [sym_boolean] = ACTIONS(1),
@@ -738,7 +737,7 @@ static const uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
   [STATE(4)] = {
     [sym_field] = STATE(11),
     [ts_builtin_sym_end] = ACTIONS(24),
-    [aux_sym_document_token1] = ACTIONS(24),
+    [sym_newline] = ACTIONS(24),
     [anon_sym_TAB] = ACTIONS(24),
     [sym_null_literal] = ACTIONS(7),
     [sym_boolean] = ACTIONS(7),
@@ -771,7 +770,7 @@ static const uint16_t ts_small_parse_table[] = {
       aux_sym_row_repeat1,
     ACTIONS(28), 2,
       ts_builtin_sym_end,
-      aux_sym_document_token1,
+      sym_newline,
   [11] = 3,
     ACTIONS(5), 1,
       anon_sym_TAB,
@@ -779,7 +778,7 @@ static const uint16_t ts_small_parse_table[] = {
       aux_sym_row_repeat1,
     ACTIONS(28), 2,
       ts_builtin_sym_end,
-      aux_sym_document_token1,
+      sym_newline,
   [22] = 3,
     ACTIONS(5), 1,
       anon_sym_TAB,
@@ -787,7 +786,7 @@ static const uint16_t ts_small_parse_table[] = {
       aux_sym_row_repeat1,
     ACTIONS(30), 2,
       ts_builtin_sym_end,
-      aux_sym_document_token1,
+      sym_newline,
   [33] = 3,
     ACTIONS(34), 1,
       anon_sym_TAB,
@@ -795,25 +794,25 @@ static const uint16_t ts_small_parse_table[] = {
       aux_sym_row_repeat1,
     ACTIONS(32), 2,
       ts_builtin_sym_end,
-      aux_sym_document_token1,
+      sym_newline,
   [44] = 1,
     ACTIONS(37), 3,
       ts_builtin_sym_end,
-      aux_sym_document_token1,
+      sym_newline,
       anon_sym_TAB,
   [50] = 1,
     ACTIONS(32), 3,
       ts_builtin_sym_end,
-      aux_sym_document_token1,
+      sym_newline,
       anon_sym_TAB,
   [56] = 2,
     ACTIONS(11), 1,
       ts_builtin_sym_end,
     ACTIONS(39), 1,
-      aux_sym_document_token1,
+      sym_newline,
   [63] = 2,
     ACTIONS(39), 1,
-      aux_sym_document_token1,
+      sym_newline,
     ACTIONS(41), 1,
       ts_builtin_sym_end,
   [70] = 1,
@@ -821,7 +820,7 @@ static const uint16_t ts_small_parse_table[] = {
       ts_builtin_sym_end,
   [74] = 1,
     ACTIONS(39), 1,
-      aux_sym_document_token1,
+      sym_newline,
 };
 
 static const uint32_t ts_small_parse_table_map[] = {

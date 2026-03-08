@@ -14,9 +14,11 @@ module.exports = grammar({
 
   rules: {
     document: $ => seq(
-      repeat(seq($.row, /\r|\r\n|\n/)),
+      repeat(seq($.row, $.newline)),
       optional($.row),
     ),
+
+    newline: _ => /\r?\n/,
 
     row: $ => choice(
       seq($.field, repeat(seq("\t", optional($.field)))),
@@ -56,7 +58,7 @@ module.exports = grammar({
       /-?0[xX][0-9a-fA-F]+/,
     ))),
 
-    quoted_string: _ => token(prec(1, seq('"', repeat(choice(/[^"]/, '""')), '"'))),
+    quoted_string: _ => token(seq('"', repeat(choice(/[^"]/, '""')), '"')),
     text: _ => token(prec(-1, /[^\t\r\n]+/)),
   },
 });
